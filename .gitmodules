@@ -1,6 +1,0 @@
-[submodule "dao/lib/forge-std"]
-	path = dao/lib/forge-std
-	url = https://github.com/foundry-rs/forge-std
-[submodule "dao/lib/openzeppelin-contracts"]
-	path = dao/lib/openzeppelin-contracts
-	url = https://github.com/OpenZeppelin/openzeppelin-contracts
