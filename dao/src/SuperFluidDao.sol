@@ -43,6 +43,8 @@ interface ISuperFluidDao {
     // functions
     function postProposal(bytes32 descriptionCID, uint64 timeSpan) external;
 
+    function getToken() external view returns (SuperFluidToken);
+
     function getProposal(
         uint _proposalId
     ) external view returns (Proposal memory);
@@ -73,6 +75,10 @@ contract SuperFluidDao is ISuperFluidDao {
         );
 
         emit ProposalSubmitted(_proposals.length - 1);
+    }
+
+    function getToken() public view returns (SuperFluidToken) {
+        return _superFluidToken;
     }
 
     function getProposal(
@@ -112,7 +118,7 @@ contract SuperFluidDao is ISuperFluidDao {
             _proposals[proposalId].voteAgainst += voteWeight;
             _votes[msg.sender][proposalId] = VoteStatus.VotedAgainst;
         }
-
+        // enlever token après
         emit CastVote(msg.sender, proposalId, voteWeight);
     }
 
