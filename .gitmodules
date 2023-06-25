@@ -1,3 +1,6 @@
 [submodule "dao/lib/solmate"]
 	path = dao/lib/solmate
 	url = https://github.com/transmissions11/solmate
+[submodule "dao/lib/openzeppelin-contracts"]
+	path = dao/lib/openzeppelin-contracts
+	url = https://github.com/Openzeppelin/openzeppelin-contracts
