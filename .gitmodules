@@ -1,0 +1,3 @@
+[submodule "dao/lib/solmate"]
+	path = dao/lib/solmate
+	url = https://github.com/transmissions11/solmate

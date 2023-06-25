@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import { ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
+// import { ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
 
 contract Dao {
 
     struct Proposal {
-        string description;
         uint voteCount;
         bool executed;
     }
@@ -18,13 +17,12 @@ contract Dao {
         uint tokenBalance;
     }
 
-    address[] public members; // peut etre enlevé je pense on a déja membersInfo
-    mapping(address => Member) public membersInfo;
-    mapping(address => mapping(uint => bool)) public votes;
-    Proposal[] public proposals;
+    address[] private members; // peut etre enlevé je pense on a déja membersInfo
+    mapping(address => Member) private membersInfo;
+    mapping(address => mapping(uint => bool)) private votes;
+    Proposal[] private proposals;
 
-    uint public totalSupply;
-    mapping(address => uint) public balances; // peut etre enlevé je pense on a déja membersInfo
+    uint private totalSupply;
 
     event ProposalMade(uint indexed proposalId, string description);
     event VoteCast(address indexed voter, uint indexed proposalId, uint tokenAmount);
@@ -40,7 +38,7 @@ contract Dao {
         );
 
         members.push(_member);
-        balances[_member] = 100;
+        membersInfo[_member].tokenBalance = 100;
         totalSupply += 100;
     }
 
@@ -57,15 +55,14 @@ function removeMember(address _member) public {
             }
         }
 
-        totalSupply -= balances[_member];
-        balances[_member] = 0;
+        totalSupply -= membersInfo[_member].tokenBalance;
+        membersInfo[_member].tokenBalance = 0;
     }
 
     function makeProposal(string calldata _description) public { // demander pq memory (stock ou et pq)
         proposals.push (
             Proposal (
                 {
-                    description: _description,
                     voteCount: 0,
                     executed: false
                 }
@@ -76,7 +73,7 @@ function removeMember(address _member) public {
 
     function vote(uint _proposalId, uint _tokenAmout) public {
         require(membersInfo[msg.sender].memberAddress != address(0), "You are not a member");
-        require(balances[msg.sender] >= _tokenAmout, "You don't have enough tokens to vote");
+        require(membersInfo[msg.sender].tokenBalance >= _tokenAmout, "You don't have enough tokens to vote");
         require(votes[msg.sender][_proposalId] == false, "You already voted for this proposal");
         votes[msg.sender][_proposalId] = true;
         membersInfo[msg.sender].tokenBalance -= _tokenAmout;
