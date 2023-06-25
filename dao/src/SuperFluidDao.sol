@@ -118,7 +118,9 @@ contract SuperFluidDao is ISuperFluidDao {
             _proposals[proposalId].voteAgainst += voteWeight;
             _votes[msg.sender][proposalId] = VoteStatus.VotedAgainst;
         }
-        // enlever token après
+        
+        _superFluidToken.burn(msg.sender, 1);
+
         emit CastVote(msg.sender, proposalId, voteWeight);
     }
 
@@ -141,10 +143,8 @@ contract SuperFluidDao is ISuperFluidDao {
         if (_proposals[proposalId].voteFor > _proposals[proposalId].voteAgainst) {
             _superFluidToken.mint(msg.sender, _proposals[proposalId].voteFor);
         }
-        // if (_proposals[proposalId].voteFor < _proposals[proposalId].voteAgainst) {
-            // _superFluidToken.burn(msg.sender, _proposals[proposalId].voteAgainst);
-        // }
-
-        // implémenter burn pour enlever les tokens
+        if (_proposals[proposalId].voteFor < _proposals[proposalId].voteAgainst) {
+            _superFluidToken.burn(msg.sender, 1);
+        }
     }
 }

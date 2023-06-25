@@ -26,4 +26,8 @@ contract SuperFluidToken is ERC20, SuperFluidAdmin {
     function mint(address to, uint256 amount) public onlyAdmin {
         _mint(to, amount);
     }
+
+    function burn(address to, uint256 amount) public onlyAdmin {
+        _burn(to, amount);
+    }
 }
