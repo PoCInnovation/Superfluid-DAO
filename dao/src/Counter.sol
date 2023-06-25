@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+import { ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
+
 contract Dao {
 
     struct Proposal {
@@ -9,6 +11,7 @@ contract Dao {
         bool executed;
     }
 
+// must be deleted and replace it's usage
     struct Member {
         address memberAddress;
         uint memberSince;
@@ -23,7 +26,7 @@ contract Dao {
     uint public totalSupply;
     mapping(address => uint) public balances; // peut etre enlevé je pense on a déja membersInfo
 
-    event ProposalMake(uint indexed proposalId, string description);
+    event ProposalMade(uint indexed proposalId, string description);
     event VoteCast(address indexed voter, uint indexed proposalId, uint tokenAmount);
 
     function addMember(address _member) public {
@@ -41,7 +44,8 @@ contract Dao {
         totalSupply += 100;
     }
 
-    function removeMember(address _member) public {
+// must be intern gestion
+function removeMember(address _member) public {
         require(membersInfo[_member].memberAddress != address(0), "Member doesn't exist");
         membersInfo[_member] = Member(address(0), 0, 0);
 
@@ -55,19 +59,9 @@ contract Dao {
 
         totalSupply -= balances[_member];
         balances[_member] = 0;
-
-        /*
-
-            require(membersInfo[_member].memberAddress != address(0), "Member doesn't exist");
-            totalSupply -= balances[_member];
-            delete membersInfo[_member];
-
-            IMO
-
-        */
     }
 
-    function makeProposal(string memory _description) public { // demander pq memory (stock ou et pq)
+    function makeProposal(string calldata _description) public { // demander pq memory (stock ou et pq)
         proposals.push (
             Proposal (
                 {
@@ -77,7 +71,7 @@ contract Dao {
                 }
             )
         );
-        emit ProposalMake((proposals.length - 1), _description);
+        emit ProposalMade((proposals.length - 1), _description);
     }
 
     function vote(uint _proposalId, uint _tokenAmout) public {
