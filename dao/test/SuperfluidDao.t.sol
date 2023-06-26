@@ -2,21 +2,21 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "../src/SuperFluidDao.sol";
-import {SuperFluidToken} from "../src/SuperFluidToken.sol";
+import "../src/SuperfluidDao.sol";
+import {SuperfluidDaoToken} from "../src/SuperfluidDaoToken.sol";
 
-contract SuperFluidDaoTest is Test {
+contract SuperfluidDaoTest is Test {
 
     address Isma = vm.addr(0x1);
-    SuperFluidDao Dao;
+    SuperfluidDao Dao;
 
     function setUp() public {
-        Dao = new SuperFluidDao();
+        Dao = new SuperfluidDao();
     }
 
     function mintTo(address to, uint256 amount) public {
         vm.startPrank(address(Dao));
-        SuperFluidToken token = Dao.getToken();
+        SuperfluidDaoToken token = Dao.getToken();
         token.mint(to, amount);
         vm.stopPrank();
     }
@@ -27,7 +27,7 @@ contract SuperFluidDaoTest is Test {
     }
 
     function test_VoteInvalidProposalId() public {
-        vm.expectRevert(ISuperFluidDao.InvalidProposalId.selector);
+        vm.expectRevert(ISuperfluidDao.InvalidProposalId.selector);
         Dao.vote(0, true);
     }
 
@@ -35,7 +35,7 @@ contract SuperFluidDaoTest is Test {
         vm.startPrank(Isma);
         Dao.postProposal("Donnez moins d'argent a Isma", 0);
         Dao.executeProposal(0);
-        vm.expectRevert(ISuperFluidDao.ProposalAlreadyExecuted.selector);
+        vm.expectRevert(ISuperfluidDao.ProposalAlreadyExecuted.selector);
         Dao.vote(0, true);
         vm.stopPrank();
     }
@@ -45,7 +45,7 @@ contract SuperFluidDaoTest is Test {
         Dao.postProposal("Donnez moins d'argent a Isma", 10);
         vm.startPrank(Isma);
         Dao.vote(0, false);
-        vm.expectRevert(ISuperFluidDao.AlreadyVoted.selector);
+        vm.expectRevert(ISuperfluidDao.AlreadyVoted.selector);
         Dao.vote(0, false);
         vm.stopPrank();
     }
@@ -54,15 +54,15 @@ contract SuperFluidDaoTest is Test {
         mintTo(Isma, 2);
         Dao.postProposal("Donnez moins d'argent a Isma", 0);
         vm.startPrank(Isma);
-        vm.expectRevert(ISuperFluidDao.ProposalDueDatePassed.selector);
+        vm.expectRevert(ISuperfluidDao.ProposalDueDatePassed.selector);
         Dao.vote(0, true);
         vm.stopPrank();
     }
 
-    function test_VoteZeroSuperfluidToken() public {
+    function test_VoteZeroSuperfluidDaoToken() public {
         Dao.postProposal("Donnez moins d'argent a Isma", 10);
         vm.startPrank(Isma);
-        vm.expectRevert(ISuperFluidDao.ZeroSuperfluidToken.selector);
+        vm.expectRevert(ISuperfluidDao.ZeroSuperfluidDaoToken.selector);
         Dao.vote(0, true);
         vm.stopPrank();
     }
@@ -72,13 +72,13 @@ contract SuperFluidDaoTest is Test {
         vm.startPrank(Isma);
         Dao.postProposal("Donnez moins d'argent a Isma", 10);
         Dao.vote(0, true);
-        ISuperFluidDao.Proposal memory proposal = Dao.getProposal(0);
+        ISuperfluidDao.Proposal memory proposal = Dao.getProposal(0);
         assertEq(proposal.voteFor, 1);
         vm.stopPrank();
     }
 
     function test_ExecuteProposalInvalidProposalId() public {
-        vm.expectRevert(ISuperFluidDao.InvalidProposalId.selector);
+        vm.expectRevert(ISuperfluidDao.InvalidProposalId.selector);
         Dao.executeProposal(0);
     }
 
@@ -86,7 +86,7 @@ contract SuperFluidDaoTest is Test {
         vm.startPrank(Isma);
         Dao.postProposal("Donnez moins d'argent a Isma", 0);
         Dao.executeProposal(0);
-        vm.expectRevert(ISuperFluidDao.ProposalAlreadyExecuted.selector);
+        vm.expectRevert(ISuperfluidDao.ProposalAlreadyExecuted.selector);
         Dao.executeProposal(0);
         vm.stopPrank();
     }
@@ -94,7 +94,7 @@ contract SuperFluidDaoTest is Test {
     function test_ExecuteProposalProposalDueDateNotReached() public {
         vm.startPrank(Isma);
         Dao.postProposal("Donnez moins d'argent a Isma", 100000000000);
-        vm.expectRevert(ISuperFluidDao.ProposalDueDateNotReached.selector);
+        vm.expectRevert(ISuperfluidDao.ProposalDueDateNotReached.selector);
         Dao.executeProposal(0);
         vm.stopPrank();
     }
@@ -102,7 +102,7 @@ contract SuperFluidDaoTest is Test {
     function test_ExecuteProposalProposalExecutedByNonAuthor() public {
         Dao.postProposal("Donnez moins d'argent a Isma", 0);
         vm.startPrank(Isma);
-        vm.expectRevert(ISuperFluidDao.ProposalExecutedByNonAuthor.selector);
+        vm.expectRevert(ISuperfluidDao.ProposalExecutedByNonAuthor.selector);
         Dao.executeProposal(0);
         vm.stopPrank();
     }
@@ -112,7 +112,7 @@ contract SuperFluidDaoTest is Test {
         vm.startPrank(Isma);
         Dao.postProposal("Donnez moins d'argent a Isma", 1);
         Dao.vote(0, true);
-        ISuperFluidDao.Proposal memory proposal = Dao.getProposal(0);
+        ISuperfluidDao.Proposal memory proposal = Dao.getProposal(0);
 
         while (block.timestamp >= proposal.dueDate)
     

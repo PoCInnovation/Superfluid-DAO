@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-// import {ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
+import {SuperfluidDaoToken} from "./SuperfluidDaoToken.sol";
 
-import {SuperFluidToken} from "./SuperFluidToken.sol";
-
-interface ISuperFluidDao {
+interface ISuperfluidDao {
     struct Proposal {
         uint256 voteFor;
         uint256 voteAgainst;
@@ -25,8 +23,8 @@ interface ISuperFluidDao {
     // error
     error InvalidProposalId();
     error AlreadyVoted();
-    error NotEnoughSuperfluidToken();
-    error ZeroSuperfluidToken();
+    error NotEnoughSuperfluidDaoToken();
+    error ZeroSuperfluidDaoToken();
     error ProposalAlreadyExecuted();
     error ProposalDueDateNotReached();
     error ProposalDueDatePassed();
@@ -43,7 +41,7 @@ interface ISuperFluidDao {
     // functions
     function postProposal(bytes32 descriptionCID, uint64 timeSpan) external;
 
-    function getToken() external view returns (SuperFluidToken);
+    function getToken() external view returns (SuperfluidDaoToken);
 
     function getProposal(
         uint _proposalId
@@ -52,13 +50,13 @@ interface ISuperFluidDao {
     function getProposals() external view returns (Proposal[] memory);
 }
 
-contract SuperFluidDao is ISuperFluidDao {
+contract SuperfluidDao is ISuperfluidDao {
     mapping(address => mapping(uint256 => VoteStatus)) private _votes;
     Proposal[] private _proposals;
-    SuperFluidToken private _superFluidToken;
+    SuperfluidDaoToken private _superfluidToken;
 
     constructor() {
-        _superFluidToken = new SuperFluidToken();
+        _superfluidToken = new SuperfluidDaoToken();
     }
 
     function postProposal(bytes32 descriptionCID, uint64 timeSpan) public {
@@ -77,8 +75,8 @@ contract SuperFluidDao is ISuperFluidDao {
         emit ProposalSubmitted(_proposals.length - 1);
     }
 
-    function getToken() public view returns (SuperFluidToken) {
-        return _superFluidToken;
+    function getToken() public view returns (SuperfluidDaoToken) {
+        return _superfluidToken;
     }
 
     function getProposal(
@@ -105,10 +103,10 @@ contract SuperFluidDao is ISuperFluidDao {
             revert ProposalDueDatePassed();
         }
 
-        uint256 voteWeight = _superFluidToken.balanceOf(msg.sender);
+        uint256 voteWeight = _superfluidToken.balanceOf(msg.sender);
 
         if (voteWeight == 0) {
-            revert ZeroSuperfluidToken();
+            revert ZeroSuperfluidDaoToken();
         }
 
         if (voteChoice) {
@@ -119,7 +117,7 @@ contract SuperFluidDao is ISuperFluidDao {
             _votes[msg.sender][proposalId] = VoteStatus.VotedAgainst;
         }
         
-        _superFluidToken.burn(msg.sender, 1);
+        _superfluidToken.burn(msg.sender, 1);
 
         emit CastVote(msg.sender, proposalId, voteWeight);
     }
@@ -141,10 +139,10 @@ contract SuperFluidDao is ISuperFluidDao {
         _proposals[proposalId].executed = true;
 
         if (_proposals[proposalId].voteFor > _proposals[proposalId].voteAgainst) {
-            _superFluidToken.mint(msg.sender, _proposals[proposalId].voteFor);
+            _superfluidToken.mint(msg.sender, _proposals[proposalId].voteFor);
         }
         if (_proposals[proposalId].voteFor < _proposals[proposalId].voteAgainst) {
-            _superFluidToken.burn(msg.sender, 1);
+            _superfluidToken.burn(msg.sender, 1);
         }
     }
 }
