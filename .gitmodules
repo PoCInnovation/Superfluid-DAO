@@ -4,3 +4,6 @@
 [submodule "dao/lib/openzeppelin-contracts"]
 	path = dao/lib/openzeppelin-contracts
 	url = https://github.com/Openzeppelin/openzeppelin-contracts
+[submodule "dao/lib/superfluid-protocol-monorepo"]
+	path = dao/lib/superfluid-protocol-monorepo
+	url = https://github.com/superfluid-finance/protocol-monorepo
