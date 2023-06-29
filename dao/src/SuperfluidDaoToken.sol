@@ -1,11 +1,9 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+// SPDX-License-Identifier: AGPLv3
+pragma solidity ^0.8.0;
 
-import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import { ISuperfluid } from "@superfluid-finance/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-import { IConstantFlowAgreementV1 } from "@superfluid-finance/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-import { ISuperToken } from "@superfluid-finance/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
-import { ISuperfluidToken } from "@superfluid-finance/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol";
+import {SuperTokenBase} from "../custom-supertokens/contracts/base/SuperTokenBase.sol";
+
+address constant SUPER_TOKEN_FACTORY = 0x0422689cc4087b6B7280e0a7e7F655200ec86Ae1;
 
 contract SuperfluidAdmin {
     address private _admin;
@@ -24,19 +22,13 @@ contract SuperfluidAdmin {
     }
 }
 
-contract SuperfluidDaoToken is ERC20, SuperfluidAdmin {
+contract SuperfluidDaoToken is  SuperfluidAdmin {
 
-    // ISuperfluid private _host; // Contrat hôte Superfluid
-    // IConstantFlowAgreementV1 private _cfa; // Contrat d'accord de flux constant
-    // ISuperToken private _superToken; // Contrat Super Token
-
-    constructor() ERC20("SuperfluidDaoToken", "SFT") SuperfluidAdmin() {
-        // _host = ISuperfluid(msg.sender)
-        // _cfa = IConstantFlowAgreementV1();
-        // _superToke
+    constructor() {
+		_initialize(SUPER_TOKEN_FACTORY, "SuperfluidDaoToken", "SDT");
     }
 
-    function mint(address to, uint256 amount) public onlyAdmin {
+	function mint(address to, uint256 amount) public onlyAdmin {
         _mint(to, amount);
     }
 

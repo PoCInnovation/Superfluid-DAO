@@ -113,9 +113,7 @@ contract SuperfluidDaoTest is Test {
         Dao.postProposal("Donnez moins d'argent a Isma", 1);
         Dao.vote(0, true);
         ISuperfluidDao.Proposal memory proposal = Dao.getProposal(0);
-
-        while (block.timestamp >= proposal.dueDate)
-    
+        vm.warp(proposal.dueDate + 1);    
         Dao.executeProposal(0);
         vm.stopPrank();
     }

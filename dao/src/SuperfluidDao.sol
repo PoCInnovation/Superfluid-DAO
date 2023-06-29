@@ -116,7 +116,7 @@ contract SuperfluidDao is ISuperfluidDao {
             _proposals[proposalId].voteAgainst += voteWeight;
             _votes[msg.sender][proposalId] = VoteStatus.VotedAgainst;
         }
-        
+
         _superfluidToken.burn(msg.sender, 1);
 
         emit CastVote(msg.sender, proposalId, voteWeight);
