@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPLv3
+// SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
 import {SuperTokenBase} from "custom-supertokens/base/SuperTokenBase.sol";
@@ -23,12 +23,18 @@ contract SuperfluidAdmin {
 }
 
 contract SuperfluidDaoToken is SuperTokenBase, SuperfluidAdmin {
-    constructor() {
-        // _initialize(SUPER_TOKEN_FACTORY, "SuperfluidDaoToken", "SDT");
-    }
+    constructor() {}
 
-    function balanceOf(address account) public view returns (uint256) {
-        return _balanceOf(account);
+    /// @dev Upgrades the super token with the factory, then initializes.
+    /// @param factory super token factory for initialization
+    /// @param name super token name
+    /// @param symbol super token symbol
+    function initialize(
+        address factory,
+        string memory name,
+        string memory symbol
+    ) external onlyAdmin {
+        _initialize(factory, name, symbol);
     }
 
     function mint(address to, uint256 amount) public onlyAdmin {

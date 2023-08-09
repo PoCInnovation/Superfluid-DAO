@@ -1,12 +1,8 @@
 [profile.default]
 src = "src"
+script = "script"
+test = "test"
 out = "out"
 libs = ["lib"]
-remappings = [
-    "custom-supertokens/=lib/custom-supertokens/",
-    "forge-std/=lib/forge-std/src/",
-    "@openzeppelin/=lib/@openzeppelin/",
-    "@superfluid-finance/=lib/@superfluid-finance/packages/",
-]
-auto_detect_remappings = true
+
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
