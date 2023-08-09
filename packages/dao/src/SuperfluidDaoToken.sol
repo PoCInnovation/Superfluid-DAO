@@ -37,10 +37,6 @@ contract SuperfluidDaoToken is SuperTokenBase, SuperfluidAdmin {
         _initialize(factory, name, symbol);
     }
 
-    function balanceOf(address account) public view returns (uint256) {
-        return _balanceOf(account);
-    }
-
     function mint(address to, uint256 amount) public onlyAdmin {
         _mint(to, amount, "");
     }

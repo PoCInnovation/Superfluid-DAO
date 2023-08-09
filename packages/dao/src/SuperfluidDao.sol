@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import {SuperfluidDaoToken} from "./SuperfluidDaoToken.sol";
+import {ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
 
 interface ISuperfluidDao {
     struct Proposal {
@@ -103,7 +104,9 @@ contract SuperfluidDao is ISuperfluidDao {
             revert ProposalDueDatePassed();
         }
 
-        uint256 voteWeight = _superfluidToken.balanceOf(msg.sender);
+        uint256 voteWeight = ISuperToken(address(_superfluidToken)).balanceOf(
+            msg.sender
+        );
 
         if (voteWeight == 0) {
             revert ZeroSuperfluidDaoToken();
