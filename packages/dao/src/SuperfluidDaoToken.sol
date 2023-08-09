@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPLv3
 pragma solidity ^0.8.0;
 
-import {SuperTokenBase} from "@custom-supertokens/contracts/base/SuperTokenBase.sol";
+import {SuperTokenBase} from "custom-supertokens/base/SuperTokenBase.sol";
 
 address constant SUPER_TOKEN_FACTORY = 0x94f26B4c8AD12B18c12f38E878618f7664bdcCE2;
 
@@ -23,13 +23,15 @@ contract SuperfluidAdmin {
 }
 
 contract SuperfluidDaoToken is SuperTokenBase, SuperfluidAdmin {
-
     constructor() {
-        
-	    // _initialize(SUPER_TOKEN_FACTORY, "SuperfluidDaoToken", "SDT");
+        // _initialize(SUPER_TOKEN_FACTORY, "SuperfluidDaoToken", "SDT");
     }
 
-	function mint(address to, uint256 amount) public onlyAdmin {
+    function balanceOf(address account) public view returns (uint256) {
+        return _balanceOf(account);
+    }
+
+    function mint(address to, uint256 amount) public onlyAdmin {
         _mint(to, amount, "");
     }
 

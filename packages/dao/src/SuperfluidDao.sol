@@ -138,10 +138,14 @@ contract SuperfluidDao is ISuperfluidDao {
 
         _proposals[proposalId].executed = true;
 
-        if (_proposals[proposalId].voteFor > _proposals[proposalId].voteAgainst) {
+        if (
+            _proposals[proposalId].voteFor > _proposals[proposalId].voteAgainst
+        ) {
             _superfluidToken.mint(msg.sender, _proposals[proposalId].voteFor);
         }
-        if (_proposals[proposalId].voteFor < _proposals[proposalId].voteAgainst) {
+        if (
+            _proposals[proposalId].voteFor < _proposals[proposalId].voteAgainst
+        ) {
             _superfluidToken.burn(msg.sender, 1);
         }
     }
