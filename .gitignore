@@ -1,0 +1,4 @@
+# Forge lib
+/packages/dao/lib/@openzeppelin/
+/packages/dao/lib/@superfluid-finance
+/packages/dao/lib/forge-std/

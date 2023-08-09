@@ -1,0 +1,4 @@
+@openzeppelin/=lib/@openzeppelin/
+@superfluid-finance/=lib/@superfluid-finance/packages/
+custom-supertokens/=lib/custom-supertokens/
+forge-std/=lib/forge-std/src/
