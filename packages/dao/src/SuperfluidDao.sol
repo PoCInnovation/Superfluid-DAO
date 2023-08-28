@@ -52,14 +52,20 @@ interface ISuperfluidDao {
 }
 
 contract SuperfluidDao is ISuperfluidDao {
-    mapping(address => mapping(uint256 => VoteStatus)) private _votes;
+    mapping(address voter => mapping(uint256 proposalId => VoteStatus))
+        private _votes;
     Proposal[] private _proposals;
     SuperfluidDaoToken private _superfluidToken;
-    address constant SUPER_TOKEN_FACTORY = 0x94f26B4c8AD12B18c12f38E878618f7664bdcCE2;
-    
+    address constant SUPER_TOKEN_FACTORY =
+        0x94f26B4c8AD12B18c12f38E878618f7664bdcCE2;
+
     constructor() {
         _superfluidToken = new SuperfluidDaoToken();
-        _superfluidToken.initialize(SUPER_TOKEN_FACTORY, "SuperfluidDaoToken", "SDT");
+        _superfluidToken.initialize(
+            SUPER_TOKEN_FACTORY,
+            "SuperfluidDaoToken",
+            "SDT"
+        );
     }
 
     function postProposal(bytes32 descriptionCID, uint64 timeSpan) public {

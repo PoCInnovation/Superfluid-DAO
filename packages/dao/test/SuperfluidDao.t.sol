@@ -6,26 +6,23 @@ import "../src/SuperfluidDao.sol";
 import {SuperfluidDaoToken} from "../src/SuperfluidDaoToken.sol";
 import {ISuperfluid, ISuperToken, ISuperApp} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
-import {CFAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol";
-import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-import { IInstantDistributionAgreementV1 } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol";
+import {CFAv1Forwarder} from "@superfluid-finance/ethereum-contracts/contracts/utils/CFAv1Forwarder.sol";
 
 contract SuperfluidDaoTest is Test {
+    using SuperTokenV1Library for ISuperToken;
 
     address Isma = vm.addr(0x1);
     SuperfluidDao Dao;
-    IConstantFlowAgreementV1 public cfa;
+    CFAv1Forwarder public _cfaForwarder;
     ISuperfluid public _host;
-    ISuperToken public _acceptedToken;
-    using SuperTokenV1Library for ISuperToken;
+
     function setUp() public {
         Dao = new SuperfluidDao();
         _host = ISuperfluid(0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9);
-        cfa = IConstantFlowAgreementV1(0xEd6BcbF6907D4feEEe8a8875543249bEa9D308E8);
-        _acceptedToken = ISuperToken(address(Dao.getToken()));
-        
+        _cfaForwarder = CFAv1Forwarder(
+            0xcfA132E353cB4E398080B9700609bb008eceB125
+        );
     }
-    
 
     function mintTo(address to, uint256 amount) public {
         vm.startPrank(address(Dao));
@@ -130,6 +127,7 @@ contract SuperfluidDaoTest is Test {
         Dao.executeProposal(0);
         vm.stopPrank();
     }
+
     event LogIntValue(uint8 value);
 
     function test_allow_flow() public {
@@ -137,48 +135,31 @@ contract SuperfluidDaoTest is Test {
         vm.startPrank(Isma);
         ISuperToken test = ISuperToken(address(Dao.getToken()));
 
-        _host.callAgreement(
-            cfa,
-            abi.encodeWithSelector(
-                cfa.updateFlowOperatorPermissions.selector,
-                test,
-                address(Dao.getToken()),
-                7,
-                10000,
-                new bytes(0) // placeholder - always pass in bytes(0)
-            ),
-            "0x" //userData
+        _cfaForwarder.grantPermissions(test, address(Dao.getToken()));
+
+        (uint8 flow_permisions, ) = _cfaForwarder.getFlowOperatorPermissions(
+            test,
+            Isma,
+            address(Dao.getToken())
         );
-    
-        (,uint8 flow_permisions,) = cfa.getFlowOperatorData(test, Isma, address(Dao.getToken()));
+
         assertEq(flow_permisions, 7);
         vm.stopPrank();
     }
-    function test_create_flow() public {
-        mintTo(Isma, 1000000);
-        vm.startPrank(Isma);
-        ISuperToken I_DAO = ISuperToken(address(Dao.getToken()));
 
-        _host.callAgreement(
-            cfa,
-            abi.encodeWithSelector(
-                cfa.updateFlowOperatorPermissions.selector,
-                I_DAO,
-                address(Dao.getToken()),
-                7,
-                10000,
-                new bytes(0) // placeholder - always pass in bytes(0)
-            ),
-            "0x" //userData
-        );
-    
-        (,uint8 flow_permisions,) = cfa.getFlowOperatorData(I_DAO, Isma, address(Dao.getToken()));
-    
-        assertEq(flow_permisions, 7);
-        vm.stopPrank();
+    function test_create_flow() public {
+        mintTo(Isma, 100000000000);
         vm.startPrank(Isma);
-        SuperfluidDaoToken token = Dao.getToken();
-        token.createFlowIntoContract(I_DAO, 1000);
+
+        address payable daoToken = payable(address(Dao.getToken()));
+
+        _cfaForwarder.grantPermissions(ISuperToken(daoToken), daoToken);
+
+        SuperfluidDaoToken(daoToken).createFlowIntoContract(
+            ISuperToken(daoToken),
+            1000
+        );
+
         vm.stopPrank();
     }
 }

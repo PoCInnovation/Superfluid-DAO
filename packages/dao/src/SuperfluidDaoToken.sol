@@ -3,10 +3,7 @@ pragma solidity ^0.8.0;
 
 import {SuperTokenBase} from "custom-supertokens/base/SuperTokenBase.sol";
 import {ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
-import {
-    SuperTokenV1Library
-} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
-
+import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 
 address constant SUPER_TOKEN_FACTORY = 0x94f26B4c8AD12B18c12f38E878618f7664bdcCE2;
 
@@ -26,11 +23,10 @@ contract SuperfluidAdmin {
         _admin = admin;
     }
 }
-error Unauthorized();
-
 
 contract SuperfluidDaoToken is SuperTokenBase, SuperfluidAdmin {
     using SuperTokenV1Library for ISuperToken;
+
     constructor() {}
 
     function initialize(
@@ -41,7 +37,10 @@ contract SuperfluidDaoToken is SuperTokenBase, SuperfluidAdmin {
         _initialize(factory, name, symbol);
     }
 
-    function createFlowIntoContract(ISuperToken token, int96 flowRate) external{
+    function createFlowIntoContract(
+        ISuperToken token,
+        int96 flowRate
+    ) external {
         token.createFlowFrom(msg.sender, address(this), flowRate);
     }
 
@@ -49,13 +48,16 @@ contract SuperfluidDaoToken is SuperTokenBase, SuperfluidAdmin {
     /// @dev This requires the contract to be a flowOperator for the msg sender.
     /// @param token Token to stream.
     /// @param flowRate Flow rate per second to stream.
-    function updateFlowIntoContract(ISuperToken token, int96 flowRate) external onlyAdmin(){
+    function updateFlowIntoContract(
+        ISuperToken token,
+        int96 flowRate
+    ) external {
         token.updateFlowFrom(msg.sender, address(this), flowRate);
     }
 
     /// @notice Delete a stream that the msg.sender has open into the contract.
     /// @param token Token to quit streaming.
-    function deleteFlowIntoContract(ISuperToken token) external onlyAdmin{
+    function deleteFlowIntoContract(ISuperToken token) external {
         token.deleteFlow(msg.sender, address(this));
     }
 
@@ -66,5 +68,4 @@ contract SuperfluidDaoToken is SuperTokenBase, SuperfluidAdmin {
     function burn(address to, uint256 amount) public onlyAdmin {
         _burn(to, amount, "");
     }
-    
 }
