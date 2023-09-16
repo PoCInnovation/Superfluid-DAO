@@ -7,11 +7,14 @@ const CreateDao = () => {
           <p className="text-left text-2xl max-w-4xl">
             Need ideas ? Or just curious ? Discover what your neighbors do.
             Unlock the potential of decentralized innovation by creating a DAO
-            (Decentralized Autonomous Organization) today. With DAOs, you
-            empower communities, ensure transparency through blockchain
-            technology, and drive efficiency with smart contracts. Join the
-            movement, shape the future, and pioneer a new era of decentralized
-            governance and innovation. Start your DAO journey today!
+            (Decentralized Autonomous Organization) today.
+          </p>
+          <p className="text-left text-2xl max-w-4xl">
+            With DAOs, you empower communities, ensure transparency through
+            blockchain technology, and drive efficiency with smart contracts.
+            Join the movement, shape the future, and pioneer a new era of
+            decentralized governance and innovation. Start your DAO journey
+            today!
           </p>
         </div>
         <div className="flex-col flex gap-10">
