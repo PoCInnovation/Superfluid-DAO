@@ -9,11 +9,11 @@ const YoursDao = () => {
           Here you can find all your DAOs, you can manage them as you want !
         </p>
       </div>
-      <div className="flex grid-cols-2 grid-rows-2 gap-10 pt-10">
+      <div className="grid grid-cols-2 gap-10 pt-10">
         <CardYourDao
           name={"My dao1"}
           description={
-            "Lorem ipsum dolor sitamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla"
+            "Lorem ipsum dolor sitamco laboris nisi ut aliquip ex ea commodo consequat."
           }
         />
         <CardYourDao
@@ -22,11 +22,8 @@ const YoursDao = () => {
             "Lorem ipsum dolor sitamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla"
           }
         />
-      </div>
-
-      <div className="flex grid-cols-2 grid-rows-2 gap-10 pt-10">
         <CardYourDao
-          name={"My dao1"}
+          name={"My dao2"}
           description={
             "Lorem ipsum dolor sitamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla"
           }

@@ -1,6 +1,5 @@
 const CreateDao = () => {
   return (
-    <>
       <div className="flex flex-row place-content-around pt-44">
         <div className="flex flex-col gap-5">
           <h1 className="text-left text-6xl font-bold">Build your DAO</h1>
@@ -41,7 +40,6 @@ const CreateDao = () => {
           </button>
         </div>
       </div>
-    </>
   );
 };
 
