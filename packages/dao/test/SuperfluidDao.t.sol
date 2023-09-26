@@ -22,6 +22,11 @@ contract SuperfluidDaoTest is Test {
         _cfaForwarder = CFAv1Forwarder(
             0xcfA132E353cB4E398080B9700609bb008eceB125
         );
+        mintTo(Isma, 100000000000);
+        vm.startPrank(Isma);
+        address payable daoToken = payable(address(Dao.getToken()));
+        _cfaForwarder.grantPermissions(ISuperToken(daoToken), daoToken);
+        vm.stopPrank();
     }
 
     function mintTo(address to, uint256 amount) public {
@@ -148,18 +153,23 @@ contract SuperfluidDaoTest is Test {
     }
 
     function test_create_flow() public {
-        mintTo(Isma, 100000000000);
         vm.startPrank(Isma);
 
         address payable daoToken = payable(address(Dao.getToken()));
 
         _cfaForwarder.grantPermissions(ISuperToken(daoToken), daoToken);
 
-        SuperfluidDaoToken(daoToken).createFlowIntoContract(
-            ISuperToken(daoToken),
-            1000
-        );
 
+        int96 prevFlowRate = _cfaForwarder.getFlowrate(ISuperToken(daoToken), Isma, daoToken);
+
+        console2.log(prevFlowRate);
+        console2.log(ISuperToken(daoToken).balanceOf(Isma));
+        SuperfluidDaoToken(daoToken).createFlowIntoContract(
+                ISuperToken(daoToken),
+                1000
+            );
+        int96 prevFlowRate2 = _cfaForwarder.getFlowrate(ISuperToken(daoToken), Isma, daoToken);
+        console2.log(prevFlowRate2);
         vm.stopPrank();
     }
 }
