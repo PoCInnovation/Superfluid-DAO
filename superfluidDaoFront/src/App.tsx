@@ -7,9 +7,9 @@ import Dashboard from "./pages/Dashboard";
 import AboutUs from "./pages/AboutUs";
 import { Routes, Route } from "react-router-dom";
 
-function App() {
+const App = () => {
   return (
-    <>
+    <div className="app-container">
       <NavBar />
       <Routes>
         <Route path="/" element={<LandingComponent />} />
@@ -18,8 +18,9 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
-    </>
+    </div>
   );
-}
+};
 
 export default App;
+
