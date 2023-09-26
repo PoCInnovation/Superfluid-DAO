@@ -10,7 +10,9 @@ const NavBar = () => {
         <button className="btn btn-outline btn-success rounded-full">
           Connect Wallet
         </button>
-        <p className="text-xl">About us</p>
+        <Link to="/about-us" className="text-xl">
+          About Us
+        </Link>
         <Link to="/yours-dao" className="text-xl">
           DAO's
         </Link>
