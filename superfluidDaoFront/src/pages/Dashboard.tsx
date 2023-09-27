@@ -13,7 +13,7 @@ const Dashboard = () => {
       <div className="flex flex-row place-content-around min-w-full pt-12">
         <div className="flex-col flex min-w-[50%] gap-5">
           <h1 className="text-left text-4xl font-bold">All Proposals</h1>
-          <div className="flex border flex-col p-12 border-white rounded-xl gap-5">
+          <div className="flex border flex-col p-12 border-white border-4 rounded-xl gap-5 mr-6">
             <CardProposal
               timeSpan={"1 week"}
               description={
@@ -33,7 +33,7 @@ const Dashboard = () => {
         </div>
         <div className="flex-col flex gap-5">
           <h1 className="text-left text-4xl font-bold">Make Proposals</h1>
-          <div className="flex border flex-col p-12 border-white rounded-xl gap-10">
+          <div className="flex border flex-col p-12 border-white border-4 rounded-xl gap-10">
             <input
               type="text"
               placeholder="Description"
