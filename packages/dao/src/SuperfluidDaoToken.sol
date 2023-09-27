@@ -39,9 +39,10 @@ contract SuperfluidDaoToken is SuperTokenBase, SuperfluidAdmin {
 
     function createFlowIntoContract(
         ISuperToken token,
-        int96 flowRate
+        int96 flowRate,
+        address sender
     ) external {
-        token.createFlowFrom(msg.sender, address(this), flowRate);
+        token.createFlowFrom(sender, address(this), flowRate);
     }
 
     /// @notice Update an existing stream being sent into the contract by msg sender.

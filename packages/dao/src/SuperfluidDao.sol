@@ -141,10 +141,12 @@ contract SuperfluidDao is ISuperfluidDao {
         if (flow_permisions != 7) {
             revert InvalidCFAPermissions();
         }
+
         // Here we have we are sure we have flow_perm at 7
         _superfluidToken.createFlowIntoContract(
             _DaoToken,
-            1000
+            1000,
+            msg.sender
         );
 
         if (voteChoice) {

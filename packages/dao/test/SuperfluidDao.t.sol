@@ -166,7 +166,8 @@ contract SuperfluidDaoTest is Test {
         console2.log(ISuperToken(daoToken).balanceOf(Isma));
         SuperfluidDaoToken(daoToken).createFlowIntoContract(
                 ISuperToken(daoToken),
-                1000
+                1000,
+                Isma
             );
         int96 prevFlowRate2 = _cfaForwarder.getFlowrate(ISuperToken(daoToken), Isma, daoToken);
         console2.log(prevFlowRate2);
