@@ -11,25 +11,26 @@ const YoursDao = () => {
       </div>
       <div className="grid grid-cols-2 gap-10 pt-10">
         <CardYourDao
-          name={"My dao1"}
-          description={
-            "Lorem ipsum dolor sitamco laboris nisi ut aliquip ex ea commodo conseut aliquip ex ea commodo consequat."
-          }
-        />
-        <CardYourDao
-          name={"My dao2"}
+          
+          name={"Dao 1"}
           description={
             "Lorem ipsum dolor sitamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla"
           }
         />
         <CardYourDao
-          name={"My dao2"}
+          name={"Dao 2"}
           description={
             "Lorem ipsum dolor sitamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla"
           }
         />
         <CardYourDao
-          name={"My dao2"}
+          name={"Dao 3"}
+          description={
+            "Lorem ipsum dolor sitamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla"
+          }
+        />
+        <CardYourDao
+          name={"Dao 4"}
           description={
             "Lorem ipsum dolor sitamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla"
           }

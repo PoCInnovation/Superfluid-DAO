@@ -1,9 +1,9 @@
 const LandingComponent = () => {
   return (
-    <div className="flex flex-row items-center justify-center pt-40">
+    <div className="flex flex-row justify-center items-center pt-40">
       <div className="flex place-items-start flex-col gap-10">
-        <h1 className="text-6xl font-bold">Landing Page</h1>
-        <p className="text-left text-2xl max-w-4xl">
+        <h1 className="text-6xl font-bold">SuperFluid DAO</h1>
+        <p className="text-justify text-lg max-w-4xl mb-5 mr-5">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -21,7 +21,7 @@ const LandingComponent = () => {
           </button>
         </div>
       </div>
-      <img src="/landing.png" alt="landing" className="w-1/2 h-1/2" />
+      <img src="https://cdn-icons-png.flaticon.com/512/8100/8100284.png" alt="landing" className="w-1/2 h-1/2" />
     </div>
   );
 };

@@ -9,15 +9,15 @@ const CardYourDao = (props: Props) => {
   return (
     <Link to="/dashboard">
       <div className="card card-side bg-base-0 shadow-xs">
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex bg-gray-400">
-          <img
-            src="/images/stock/photo-1635805737707-575885ab0820.jpg"
-            alt="Dao1"
-            className="w-24 h-24 object-cover rounded-full mr-4"
-          />
+        <div className="p-6 rounded-lg shadow-lg flex bg-gray-300">
+          <div className="avatar placeholder">
+            <div className="bg-neutral-focus text-neutral-content rounded-full w-24">
+              <span className="text-4xl">{props.name.charAt(0)}</span>
+            </div>
+          </div>
           <div>
-            <h1 className="text-3xl font-bold text-white text-left">{props.name}</h1>
-            <p className="text-gray-300 text-sm mt-2 text-justify">{props.description}</p>
+            <h1 className="text-3xl ml-4 font-bold text-white text-left">{props.name}</h1>
+            <p className="text-gray-600 text-sm ml-4 mt-2 text-justify">{props.description}</p>
           </div>
         </div>
       </div>
