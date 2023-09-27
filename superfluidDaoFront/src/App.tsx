@@ -17,6 +17,7 @@ const App = () => {
         <Route path="/yours-dao" element={<YoursDao />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/explore" element={<Dashboard />} />
       </Routes>
     </div>
   );

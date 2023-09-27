@@ -10,13 +10,15 @@ const NavBar = () => {
         <button className="btn btn-outline btn-success rounded-full">
           Connect Wallet
         </button>
-        <Link to="/about-us" className="text-xl">
+        <Link to="/about-us" className="text-xl hover:underline">
           About Us
         </Link>
-        <Link to="/yours-dao" className="text-xl">
+        <Link to="/yours-dao" className="text-xl hover:underline">
           DAO's
         </Link>
-        <p className="text-xl">Explore</p>
+        <Link to="/yours-dao" className="text-xl hover:underline">
+          Explore
+        </Link>
       </div>
     </div>
   );
