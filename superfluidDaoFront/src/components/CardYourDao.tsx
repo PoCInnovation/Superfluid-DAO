@@ -9,7 +9,7 @@ const CardYourDao = (props: Props) => {
   return (
     <Link to="/dashboard">
       <div className="card card-side bg-base-0 shadow-xs">
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex">
+        <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex bg-gray-400">
           <img
             src="/images/stock/photo-1635805737707-575885ab0820.jpg"
             alt="Dao1"
