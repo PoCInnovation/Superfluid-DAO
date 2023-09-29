@@ -1,0 +1,16 @@
+#root {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("https://img.freepik.com/premium-vector/white-abstract-background-paper-style_23-2148389998.jpg?w=2000");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
