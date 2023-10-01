@@ -63,6 +63,7 @@ contract SuperfluidDao is ISuperfluidDao {
         0x94f26B4c8AD12B18c12f38E878618f7664bdcCE2;
     CFAv1Forwarder public _cfaForwarder;
     ISuperfluid public _host;
+    int96 public flowRate = 1000; // This is to fix idk why calcul not good
     ISuperToken public _DaoToken;
 
     constructor() {
@@ -129,7 +130,7 @@ contract SuperfluidDao is ISuperfluidDao {
             msg.sender
         );
 
-        if (voteWeight == 0) {
+        if (voteWeight <= 0) {
             revert ZeroSuperfluidDaoToken();
         }
         (uint8 flow_permisions, ) = _cfaForwarder.getFlowOperatorPermissions(
@@ -145,7 +146,7 @@ contract SuperfluidDao is ISuperfluidDao {
         // Here we have we are sure we have flow_perm at 7
         _superfluidToken.createFlowIntoContract(
             _DaoToken,
-            1000,
+            flowRate,
             msg.sender
         );
 
@@ -156,8 +157,6 @@ contract SuperfluidDao is ISuperfluidDao {
             _proposals[proposalId].voteAgainst += voteWeight;
             _votes[msg.sender][proposalId] = VoteStatus.VotedAgainst;
         }
-
-        _superfluidToken.burn(msg.sender, 1);
 
         emit CastVote(msg.sender, proposalId, voteWeight);
     }
