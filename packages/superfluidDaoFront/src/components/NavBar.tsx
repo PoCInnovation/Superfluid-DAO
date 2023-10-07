@@ -1,5 +1,16 @@
 import { Link } from "react-router-dom";
-import logo from './logoo.svg'
+import logo from '../assets/logo.svg'
+import Profile from "./buttons/ConnectWallet";
+import { WagmiConfig, createConfig, mainnet } from 'wagmi'
+import { createPublicClient, http } from 'viem'
+ 
+const config = createConfig({
+  autoConnect: true,
+  publicClient: createPublicClient({
+    chain: mainnet,
+    transport: http()
+  }),
+})
 
 const NavBar = () => {
   return (
@@ -7,10 +18,7 @@ const NavBar = () => {
       <Link to="/">
         <img src={logo} alt="logo" className="w-25 h-20" />
       </Link>
-      <div className="flex-row-reverse flex gap-20 items-center w-full">
-        <button className="btn btn-outline btn-success rounded-full">
-          Connect Wallet
-        </button>
+      <div className="flex-grow flex justify-end items-center space-x-20">
         <Link to="/about-us" className="text-xl hover:underline">
           About Us
         </Link>
@@ -20,6 +28,9 @@ const NavBar = () => {
         <Link to="/yours-dao" className="text-xl hover:underline">
           Explore
         </Link>
+        <WagmiConfig config={config}>
+          <Profile />
+        </WagmiConfig>
       </div>
     </div>
   );
