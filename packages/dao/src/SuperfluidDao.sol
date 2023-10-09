@@ -130,7 +130,7 @@ contract SuperfluidDao is ISuperfluidDao {
             msg.sender
         );
 
-        if (voteWeight <= 0) {
+        if (voteWeight == 0) {
             revert ZeroSuperfluidDaoToken();
         }
         (uint8 flow_permisions, ) = _cfaForwarder.getFlowOperatorPermissions(

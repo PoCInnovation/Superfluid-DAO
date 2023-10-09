@@ -41,7 +41,7 @@ contract SuperfluidDaoToken is SuperTokenBase, SuperfluidAdmin {
         ISuperToken token,
         int96 flowRate,
         address sender
-    ) external {
+    ) external onlyAdmin{
         token.createFlowFrom(sender, address(this), flowRate);
     }
 
@@ -52,13 +52,13 @@ contract SuperfluidDaoToken is SuperTokenBase, SuperfluidAdmin {
     function updateFlowIntoContract(
         ISuperToken token,
         int96 flowRate
-    ) external {
+    ) external onlyAdmin{
         token.updateFlowFrom(msg.sender, address(this), flowRate);
     }
 
     /// @notice Delete a stream that the msg.sender has open into the contract.
     /// @param token Token to quit streaming.
-    function deleteFlowIntoContract(ISuperToken token) external {
+    function deleteFlowIntoContract(ISuperToken token) external onlyAdmin{
         token.deleteFlow(msg.sender, address(this));
     }
 
