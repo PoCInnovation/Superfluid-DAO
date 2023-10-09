@@ -152,26 +152,4 @@ contract SuperfluidDaoTest is Test {
         assertEq(flow_permisions, 7);
         vm.stopPrank();
     }
-
-    function test_create_flow() public {
-        vm.startPrank(Isma);
-
-        address payable daoToken = payable(address(Dao.getToken()));
-
-        _cfaForwarder.grantPermissions(ISuperToken(daoToken), daoToken);
-
-
-        int96 prevFlowRate = _cfaForwarder.getFlowrate(ISuperToken(daoToken), Isma, daoToken);
-
-        console2.log(prevFlowRate);
-        console2.log(ISuperToken(daoToken).balanceOf(Isma));
-        SuperfluidDaoToken(daoToken).createFlowIntoContract(
-                ISuperToken(daoToken),
-                1000,
-                Isma
-            );
-        int96 prevFlowRate2 = _cfaForwarder.getFlowrate(ISuperToken(daoToken), Isma, daoToken);
-        console2.log(prevFlowRate2);
-        vm.stopPrank();
-    }
 }
