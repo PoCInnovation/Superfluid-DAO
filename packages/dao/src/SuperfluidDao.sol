@@ -2,7 +2,9 @@
 pragma solidity ^0.8.0;
 
 import {SuperfluidDaoToken} from "./SuperfluidDaoToken.sol";
-import {ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
+import {ISuperfluid, ISuperToken, ISuperApp} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
+import {CFAv1Forwarder} from "@superfluid-finance/ethereum-contracts/contracts/utils/CFAv1Forwarder.sol";
 
 interface ISuperfluidDao {
     struct Proposal {
@@ -30,6 +32,7 @@ interface ISuperfluidDao {
     error ProposalDueDateNotReached();
     error ProposalDueDatePassed();
     error ProposalExecutedByNonAuthor();
+    error InvalidCFAPermissions();
 
     // events
     event ProposalSubmitted(uint indexed proposalId);
@@ -52,14 +55,30 @@ interface ISuperfluidDao {
 }
 
 contract SuperfluidDao is ISuperfluidDao {
-    mapping(address => mapping(uint256 => VoteStatus)) private _votes;
+    mapping(address voter => mapping(uint256 proposalId => VoteStatus))
+        private _votes;
     Proposal[] private _proposals;
     SuperfluidDaoToken private _superfluidToken;
-    address constant SUPER_TOKEN_FACTORY = 0x94f26B4c8AD12B18c12f38E878618f7664bdcCE2;
+    address constant SUPER_TOKEN_FACTORY =
+        0x94f26B4c8AD12B18c12f38E878618f7664bdcCE2;
+    CFAv1Forwarder public _cfaForwarder;
+    ISuperfluid public _host;
+    int96 public flowRate = 1000; // This is to fix idk why calcul not good
+    ISuperToken public _DaoToken;
 
     constructor() {
         _superfluidToken = new SuperfluidDaoToken();
-        _superfluidToken.initialize(SUPER_TOKEN_FACTORY, "SuperfluidDaoToken", "SDT");
+        _superfluidToken.initialize(
+            SUPER_TOKEN_FACTORY,
+            "SuperfluidDaoToken",
+            "SDT"
+        );
+        _host = ISuperfluid(0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9);
+        _cfaForwarder = CFAv1Forwarder(
+            0xcfA132E353cB4E398080B9700609bb008eceB125
+        );
+        _DaoToken = ISuperToken(address(_superfluidToken));
+
     }
 
     function postProposal(bytes32 descriptionCID, uint64 timeSpan) public {
@@ -74,6 +93,7 @@ contract SuperfluidDao is ISuperfluidDao {
                 executed: false
             })
         );
+
 
         emit ProposalSubmitted(_proposals.length - 1);
     }
@@ -106,13 +126,29 @@ contract SuperfluidDao is ISuperfluidDao {
             revert ProposalDueDatePassed();
         }
 
-        uint256 voteWeight = ISuperToken(address(_superfluidToken)).balanceOf(
+        uint256 voteWeight = _DaoToken.balanceOf(
             msg.sender
         );
 
         if (voteWeight == 0) {
             revert ZeroSuperfluidDaoToken();
         }
+        (uint8 flow_permisions, ) = _cfaForwarder.getFlowOperatorPermissions(
+            _DaoToken,
+            msg.sender,
+            address(_superfluidToken)
+        );
+
+        if (flow_permisions != 7) {
+            revert InvalidCFAPermissions();
+        }
+
+        // Here we have we are sure we have flow_perm at 7
+        _superfluidToken.createFlowIntoContract(
+            _DaoToken,
+            flowRate,
+            msg.sender
+        );
 
         if (voteChoice) {
             _proposals[proposalId].voteFor += voteWeight;
@@ -121,8 +157,6 @@ contract SuperfluidDao is ISuperfluidDao {
             _proposals[proposalId].voteAgainst += voteWeight;
             _votes[msg.sender][proposalId] = VoteStatus.VotedAgainst;
         }
-
-        _superfluidToken.burn(msg.sender, 1);
 
         emit CastVote(msg.sender, proposalId, voteWeight);
     }
