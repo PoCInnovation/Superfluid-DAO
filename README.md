@@ -29,13 +29,6 @@ Web:
     # run web app
     npm run dev
 ```
-### Quickstart
-
-[Explain how to run this project]
-
-### Usage
-
-[Explain how to use this project]
 
 ## Get involved
 
