@@ -12,8 +12,23 @@ Superfluid DAO enables users to create and interact with a DAO where participati
 
 ### Installation
 
-[Explain how to install all of the project's dependencies]
+Contracts:
+```sh
+ #install dependency
+ forge install
+ #build contracts
+ forge build
+ # run unit test
+ forge test --rpc-url (testnet goerli)
+```
+Web:
 
+```sh
+    # install dependency
+    npm install
+    # run web app
+    npm run dev
+```
 ### Quickstart
 
 [Explain how to run this project]
