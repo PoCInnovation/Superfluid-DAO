@@ -1,26 +1,34 @@
-> If you see this section, you've just created a repository using [PoC Innovation's Open-Source project template](https://github.com/PoCInnovation/open-source-project-template). Check the [getting started guide](./.github/getting-started.md).
+# Superfluid-DAO
 
-# [PROJECT'S NAME]
-
-[Project's description]
+Superfluid DAO enables users to create and interact with a DAO where participation is essential. By utilizing the Superfluid protocol, users must actively engage, or they risk losing tokens. This encourages active involvement and participatory governance within the community. 
 
 ## How does it work?
+    Smart Contracts in Solidity:
+        Super Token: These are special tokens that allow you to stream a specific amount of tokens each month within your smart contracts. This streaming feature is made possible by Superfluid.
 
-[Explain how this project is working]
-
+    Web Interface:
+        Superfluid DAO provides a user-friendly web interface that allows you to create and interact with decentralized autonomous organizations (DAOs).
 ## Getting Started
 
 ### Installation
 
-[Explain how to install all of the project's dependencies]
+Contracts:
+```sh
+ #install dependency
+ forge install
+ #build contracts
+ forge build
+ # run unit test
+ forge test --rpc-url (testnet goerli)
+```
+Web:
 
-### Quickstart
-
-[Explain how to run this project]
-
-### Usage
-
-[Explain how to use this project]
+```sh
+    # install dependency
+    npm install
+    # run web app
+    npm run dev
+```
 
 ## Get involved
 
@@ -31,11 +39,11 @@ If you're interested in how the project is organized at a higher level, please c
 ## Our PoC team ❤️
 
 Developers
-| [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy) | [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy) | [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy)
+| [<img src="https://github.com/SloWayyy.png?size=85" width=85><br><sub>Mehdi Djendar</sub>](https://github.com/SloWayyy) | [<img src="https://github.com/moonia.png?size=85" width=85><br><sub>mounia ARJDAL</sub>](https://github.com/moonia) | [<img src="https://github.com/1yam.png?size=85" width=85><br><sub>Lyam Gomès</sub>](https://github.com/1yam)
 | :---: | :---: | :---: |
 
 Manager
-| [<img src="https://github.com/adrienfort.png?size=85" width=85><br><sub>[Manager's name]</sub>](https://github.com/adrienfort)
+| [<img src="https://github.com/LeTamanoir.png?size=85" width=85><br><sub>[Martin SALDINGER]</sub>](https://github.com/LeTamanoir)
 | :---: |
 
 <h2 align=center>
