@@ -4,13 +4,7 @@ const LandingComponent = () => {
       <div className="flex place-items-start flex-col gap-10">
         <h1 className="text-6xl font-bold">SuperFluid DAO</h1>
         <p className="text-justify text-lg max-w-4xl mb-5 mr-5">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+        Superfluid DAO enables users to create and interact with a DAO where participation is essential. By utilizing the Superfluid protocol, users must actively engage, or they risk losing tokens. This encourages active involvement and participatory governance within the community.
         </p>
         <div className="flex gap-7">
           <button className="btn btn-outline btn-success rounded-full">

@@ -1,7 +1,7 @@
 const AboutUs = () => {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
+      <div className="full-height flex flex-row justify-center items-center pt-40">
+        <div className="text-center flex flex-col gap-10">
           <h1 className="text-4xl font-bold mb-10">Superfluid-DAO team</h1>
           <div className="flex justify-center space-x-4">
             <div className="flex space-x-4">

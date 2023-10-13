@@ -19,14 +19,14 @@ const NavBar = () => {
         <img src={logo} alt="logo" className="w-25 h-20" />
       </Link>
       <div className="flex-grow flex justify-end items-center space-x-20">
-        <Link to="/about-us" className="text-xl hover:underline">
-          About Us
+        <Link to="/explore" className="text-xl hover:underline">
+          Explore
         </Link>
-        <Link to="/yours-dao" className="text-xl hover:underline">
+        <Link to="/your-daos" className="text-xl hover:underline">
           DAO's
         </Link>
-        <Link to="/yours-dao" className="text-xl hover:underline">
-          Explore
+        <Link to="/about-us" className="text-xl hover:underline">
+          About Us
         </Link>
         <WagmiConfig config={config}>
           <Profile />

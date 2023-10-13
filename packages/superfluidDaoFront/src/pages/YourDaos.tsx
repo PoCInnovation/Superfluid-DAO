@@ -1,6 +1,6 @@
 import CardYourDao from "../components/CardYourDao";
 
-const YoursDao = () => {
+const YourDaos = () => {
   return (
     <>
       <div className="flex flex-col gap-5 pt-24">
@@ -40,4 +40,4 @@ const YoursDao = () => {
   );
 };
 
-export default YoursDao;
+export default YourDaos;
